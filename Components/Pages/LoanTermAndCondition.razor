@@ -1,0 +1,70 @@
+﻿@page "/loan-terms"
+
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components
+
+<style>
+    .btn-purple {
+        background-color: #6a1b9a;
+        border-color: #6a1b9a;
+        color: white;
+    }
+
+        .btn-purple:hover {
+            background-color: #7b1fa2;
+            border-color: #7b1fa2;
+        }
+
+    .center-button {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+</style>
+
+<div class="container d-flex justify-content-center align-items-center mt-5">
+    
+    <div class="card  p-4 text-center" style="width: 50%;">
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        <h3>Loan Terms</h3>
+        <div class="card-body">
+            <EditForm Model="@loanTerms" OnValidSubmit="@HandleValidSubmit">
+                <div class="form-group">
+                    <p>The following conditions must be met for your loan request to be approved.</p>
+                    <ol>
+                        <li>Ensure all details on your document are clearly visible when uploaded.</li>
+                        <li>You must upload a minimum of 6 months statement of account from any preferred bank.</li>
+                        <li>You must have uploaded your passport, signature, id card and utility bill on the KYC page.</li>
+                        <li>You must add a preferred bank account to be debited on scheduled date.</li>
+                        <li>A Mandate request will be sent to your email for approval.</li>
+                    </ol>
+                </div>
+
+                <div class="form-group form-check">
+                    <InputCheckbox class="form-check-input" id="agreeTerms" @bind-Value="loanTerms.AgreeToTerms" />
+                    <label class="form-check-label" for="agreeTerms">I agree to the above Pristine Divitis MFB terms.</label>
+                </div>
+                <div class="d-flex justify-content-center mt-3">
+                    <button type="submit" class="btn btn-purple">Continue</button>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+@code {
+    private LoanTermsModel loanTerms = new LoanTermsModel();
+
+    private void HandleValidSubmit()
+    {
+        // Handle form submission
+        Console.WriteLine("Form submitted successfully.");
+    }
+
+    public class LoanTermsModel
+    {
+        public bool AgreeToTerms { get; set; }
+    }
+}
+
+

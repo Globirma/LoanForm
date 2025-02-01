@@ -1,0 +1,112 @@
+﻿@page "/loan-request"
+
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components
+
+<style>
+    .btn-purple {
+    background-color: #6a1b9a;
+    border-color: #6a1b9a;
+    color: white;
+    }
+
+    .btn-purple:hover {
+    background-color: #7b1fa2;
+    border-color: #7b1fa2;
+    }
+
+    .center-button {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    }
+
+    .text {
+        color: #6a1b9a;
+    }
+</style>
+
+<div class="container mt-5">
+
+    <h3 class="text-center">Loan Request</h3>
+
+    <div class="card">
+
+        <div class="card-body">
+            <EditForm Model="@loanRequest" OnValidSubmit="@HandleValidSubmit">
+                <div class="form-group">
+                    <label class="text-center">Your credit limit: <strong>N1000000.0</strong></label>
+                </div>
+                <div class="form-group">
+                    <InputText class="form-control" @bind-Value="loanRequest.Salary" placeholder="Salary Loan" />
+                </div>
+
+                <div class="form-group">
+                    <div class="input-group">
+                    <InputText class="form-control" @bind-Value="loanRequest.Amount" placeholder="Enter amount" />
+                    <div class="input-group-append">
+                            <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            @loanRequest.Currency
+                        </button>
+                        <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" @onclick="() => SetCurrency(loanRequest.Currency)">NGN</a></li>
+                                <li><a class="dropdown-item" @onclick="() => SetCurrency(loanRequest.Currency)">Dollar</a></li>
+                       </ul>
+                    </div>
+                    </div>
+                    <small class="text-end d-block">Minimum amount: <strong>N100000.0</strong></small>
+                </div>
+
+                <div class="form-group">
+                    <label class="text-end d-block">Interest Rate: <strong>12.0%</strong></label>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col">
+                            <input type="number" class="form-control" placeholder="Monthly Installment">
+                        </div>
+                        <div class="col">
+                            <input type="number" class="form-control" placeholder="Total Payable" >
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <InputTextArea class="form-control" @bind-Value="loanRequest.Purpose" placeholder="Purpose of loan" />
+                </div>
+
+                <div class="form-group form-check">
+                    <InputCheckbox class="form-check-input" id="agreeTerms" @bind-Value="loanRequest.AgreeToTerms" />
+                    <label class="form-check-label" for="agreeTerms">I agree to the <strong class="text">Terms & Conditions and Policy</strong></label>
+                </div>
+
+                <div class="center-button">
+                    <button type="submit" class="btn btn-purple">Continue</button>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+@code {
+    private LoanRequestModel loanRequest = new LoanRequestModel();
+
+    private void HandleValidSubmit()
+    {
+        // Handle form submission
+        Console.WriteLine("Form submitted successfully.");
+    }
+    private void SetCurrency(string currency)
+    {
+        loanRequest.Currency = currency;
+    }
+    public class LoanRequestModel
+    {
+        public string Amount { get; set; }
+        public string Purpose { get; set; }
+        public string Salary { get; set; }
+        public bool AgreeToTerms { get; set; }
+        public string Currency { get; set; } = "NGN"; // Default currency
+    }
+}
